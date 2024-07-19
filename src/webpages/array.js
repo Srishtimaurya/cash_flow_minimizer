@@ -74,29 +74,6 @@ export default function DataTabelVariable() {
     return `${rowNum}-${columnNum}`;
   };
 
-//   useEffect(() => {
-//     // console.log(tableArrayData);
-//     getDataDictionary(tableArrayData);
-//   }, [tableCellsData]);
-
-//   const getDataDictionary = (data) => {
-//     const headers = data[0];
-//     let dictionary = [];
-
-//     for (let i = 0; i < data.length; i++) {
-//       let object = {};
-//       for (let j = 0; j < data[i].length; j++) {
-//           if (i == j)
-//             data[i][j] = 0;
-//         object[headers[j]] = data[i][j];
-//       }
-//       dictionary.push(object);
-//     }
-
-    // console.log(dictionary);
-//     return dictionary;
-//   };
-
   const onChangeHandler = (e) => {
     let [row, col] = e.target.name.split("-");
     if (row === col) {
@@ -138,7 +115,8 @@ export default function DataTabelVariable() {
       }
     //   console.log(children);
       table.push(
-        <TableHead style={{backgroundColor: "#ff7366"}}>
+        // <TableHead style={{backgroundColor: "#ff7366"}}>
+        <TableHead style={{ backgroundColor:'#8FBC8F'}}>
         <TableRow key={i}>
           <div style={{paddingTop:20, paddingLeft: 5, color: "#000000"}}>Person {i+1} has to pay</div>
           <TableCell>{children}</TableCell>
@@ -187,10 +165,14 @@ export default function DataTabelVariable() {
       }
     }
 
-    function handleChangeInResult(e) {
+    function handleChangeInResult() {
+      if (rowValue < 2) {
+        alert("Enter at least 2 persons involved in cash flow.");
+        return;
+      }
       if (tableArrayData.length === 0 || rowValue === 0 || columnsValue === 0)
         return;
-      addZeros(tableArrayData)
+      addZeros(tableArrayData);
       setShowResult(true);
     }
 
@@ -200,36 +182,31 @@ export default function DataTabelVariable() {
 
         
         <div className={"rowColumnsNumber"} style={{ marginTop: 20, display: "flex"}}>
-        <h4 style={{paddingRight: 20}}>Enter total number of persons involved in cash flow: </h4>
+        <h3 style={{paddingRight: 20}}>Enter total number of persons involved in cash flow: </h3>
           <TextField
             id="Row-number"
             label="Persons"
             type="number"
             InputLabelProps={{ shrink: true }}
-            inputProps={{ min: "3", max: "10", step: "1" }}
+            // With InputLabelProps={{ shrink: true }}, the "Persons" label would always be displayed above the input field, even when the field is empty.
+            inputProps={{ min: "2", max: "10", step: "1" }}
             onChange={handleChangeInPersons}
             variant="outlined"
           />
         </div>
         <div>
-          <h4>
+          <h3>
           For each cell, enter the amount that Person i has to pay to Person j. All values are 0 by default. 
           <br />Note: Diagonals values represent the person itself and that cannot be changed. 
-          </h4>
+          </h3>
         </div>
         <br />
         <div>
         <div className={"TableContainer"}>
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">
-            {/* <div style={{paddingLeft: 165}}>
-            {personColumn.map((item, index) => {
-                    return <div style={{float: "left", width: 100/{rowValue}, paddingRight: 97}}>
-                      {`To ${item}`}
-                    </div>
-                  })}
-            </div> */}
-              <TableBody  style={{backgroundColor: "#ff7366"}} ref={ref}>{generateTable()}</TableBody>
+           
+              <TableBody  style={{ backgroundColor:'#8FBC8F'}} ref={ref}>{generateTable()}</TableBody>
             </Table>
           </TableContainer>
           </div>
@@ -245,9 +222,14 @@ export default function DataTabelVariable() {
                   })
                : null}
             </div>
-            <h5>Time Complexity: O(n^2) <br />Topics Tags: #graph #greedy</h5>
+            <h5>Time Complexity: O(n^2) <br />Topics Tags: #graph #priority_queue</h5>
         </div>
       </div>
     </Fragment>
   );
 }
+
+
+
+
+
